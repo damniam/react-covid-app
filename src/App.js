@@ -3,37 +3,44 @@ import { MenuItem, FormControl, Select } from "@material-ui/core";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [countries, setCoutries] = useState([]);
+  const [countries, setCountries] = useState([]);
+  const [country, setCountry] = useState("Worldwide");
 
+  const onCountryChange = async (e) => {
+    const countryCode = e.target.value;
 
-// https://disease.sh/v3/covid-19/countries
+    console.log(countryCode);
+    setCountry(countryCode);
+  };
+  // https://disease.sh/v3/covid-19/countries
 
-// useEffect = runs a piece of code based on a given condition
-// The code inside will runs once when the component loads and not again
-// async -> send a request, wait for it, do somethin with it
-useEffect(()=> {
-  const getCountriesData = async() => {
-    await fetch("https://disease.sh/v3/covid-19/countries")
-    .then((response)=>response.json())
-    .then((data)=> {
-      const countries = data.map((country)=> ({
-          name: country.country,
-          value: country.countryInfo.iso2
-        }));
+  // useEffect = runs a piece of code based on a given condition
+  // The code inside will runs once when the component loads and not again
+  // async -> send a request, wait for it, do somethin with it
 
-    setCoutries(countries);
-      });
+  useEffect(() => {
+    const getCountriesData = async () => {
+      await fetch("https://disease.sh/v3/covid-19/countries")
+        .then((response) => response.json())
+        .then((data) => {
+          const countries = data.map((country) => ({
+            name: country.country,
+            value: country.countryInfo.iso3,
+          }));
 
-  getCountriesData();
-    }, []);
-
+          setCountries(countries);
+        });
+    };
+    getCountriesData();
+  }, []);
 
   return (
     <div className="App">
       <div class="app_header">
         <h1>Covid-19 Tracker</h1>
         <FormControl className="app__dropdown">
-          <Select variant="outlined" value="abc">
+          <Select variant="outlined" onChange={onCountryChange} value={country}>
+            <MenuItem value="worldwide">Worldwide</MenuItem>
             {countries.map((country) => (
               <MenuItem value={country.value}>{country.name}</MenuItem>
             ))}
@@ -42,7 +49,7 @@ useEffect(()=> {
             <MenuItem value="worldwide">WorldWide</MenuItem>
             <MenuItem value="worldwide">WorldWide</MenuItem>
             <MenuItem value="worldwide">WorldWide</MenuItem> */}
-          </Select>{" "}
+          </Select>
         </FormControl>
       </div>
 
