@@ -6,18 +6,16 @@ import Typography from "@material-ui/core/Typography";
 function infoBox({ title, cases, total }) {
   return (
     <>
-      <p>test</p>
-      {console.log("czy to jest")}
       <Card className="infoBox">
-        <CardContent>
+        <CardContent className="infoBox__content">
           <Typography className="infoBox__title" color="textSecondary">
             {title}
           </Typography>
-          <Typography className="infoBox__cases" color="textSecondary">
+          <Typography className="infoBox__cases" variant="body2" component="p">
             {cases}
           </Typography>
           <Typography className="infoBox_total" variant="body2" component="p">
-            {total} Total
+            {total} total
           </Typography>
         </CardContent>
       </Card>
