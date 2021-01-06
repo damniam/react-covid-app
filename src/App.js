@@ -3,6 +3,8 @@ import { MenuItem, FormControl, Select } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import InfoBox from "./components/infoBox";
 import Map from "./components/Map";
+import Graph from "./components/Graph";
+import Table from "./components/Table";
 import Button from "./components/Button";
 
 function App() {
@@ -63,7 +65,15 @@ function App() {
       <div className="app_map">
         <Map />
       </div>
-      {/*Map*/}
+      <div className="app__rightcontent">
+        <div className="app_table">
+          <Table />
+        </div>
+
+        <div className="app_graph">
+          <Graph />
+        </div>
+      </div>
     </div>
   );
 }
