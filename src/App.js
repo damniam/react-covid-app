@@ -11,11 +11,13 @@ import InfoBox from "./components/infoBox";
 import Map from "./components/Map";
 import Graph from "./components/Graph";
 import Table from "./components/Table";
+import { sortData } from "./util";
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState("worldwide");
   const [countryInfo, setCountryInfo] = useState({});
+  const [tableData, setTableData] = useState([]);
 
   const onCountryChange = async (e) => {
     const countryCode = e.target.value;
@@ -53,6 +55,8 @@ function App() {
             value: country.countryInfo.iso3,
           }));
 
+          const sortedData = sortData(data);
+          setTableData(sortedData);
           setCountries(countries);
         });
     };
@@ -103,7 +107,7 @@ function App() {
         <Card className="sidebar">
           <CardContent>
             <h3>Live Cases by Country</h3>
-            <Table />
+            <Table countries={tableData} />
             <h3>Worldwide new cases</h3>
             <Graph />
           </CardContent>
