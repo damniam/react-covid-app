@@ -12,12 +12,15 @@ import Map from "./components/Map";
 import Graph from "./components/Graph";
 import Table from "./components/Table";
 import { sortData } from "./util";
+import "leaflet/dist/leaflet.css";
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState("worldwide");
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
+  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
+  const [mapZoom, setMapZoom] = useState(3);
 
   const onCountryChange = async (e) => {
     const countryCode = e.target.value;
@@ -99,7 +102,7 @@ function App() {
           />
         </div>
         <div className="app_map">
-          <Map />
+          <Map center={mapCenter} zoom={mapZoom} />
         </div>
       </div>
 
