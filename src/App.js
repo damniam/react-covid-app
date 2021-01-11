@@ -16,37 +16,19 @@ import "leaflet/dist/leaflet.css";
 
 function App() {
   const [countries, setCountries] = useState([]);
-  const [country, setCountry] = useState("worldwide");
+  const [country, setInputCountry] = useState("worldwide");
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
   const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
-  const [mapZoom, setMapZoom] = useState(3);
+  const [mapZoom, setMapZoom] = useState([1]);
 
-  const onCountryChange = async (e) => {
-    const countryCode = e.target.value;
-    setCountry(countryCode);
-
-    const url =
-      countryCode === "worldwide"
-        ? `https://disease.sh/v3/covid-19/all`
-        : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
-
-    // worldwide - we use ---> https://disease.sh/v3/covid-19/all
-    // select country we will use --> https://disease.sh/v3/covid-19/countries/[COUNTRY_CODE]
-    await fetch(url)
+  useEffect(() => {
+    fetch("https://disease.sh/v3/covid-19/all")
       .then((response) => response.json())
       .then((data) => {
-        setCountry(countryCode); //update countryCode
-        setCountryInfo(data); //all of the data from the country response
-
-        console.log(countryInfo);
+        setCountryInfo(data);
       });
-  };
-  // https://disease.sh/v3/covid-19/countries
-
-  // useEffect = runs a piece of code based on a given condition
-  // The code inside will runs once when the component loads and not again
-  // async -> send a request, wait for it, do somethin with it
+  }, []);
 
   useEffect(() => {
     const getCountriesData = async () => {
@@ -66,6 +48,28 @@ function App() {
     getCountriesData();
   }, []);
 
+  const onCountryChange = async (e) => {
+    const countryCode = e.target.value;
+
+    const url =
+      countryCode === "worldwide"
+        ? "https://disease.sh/v3/covid-19/all"
+        : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
+    await fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setInputCountry(countryCode);
+        setCountryInfo(data);
+        setMapCenter({ lat: data.countryInfo.lat, lng: data.countryInfo.long });
+        setMapZoom([4]);
+      });
+  };
+
+  // https://disease.sh/v3/covid-19/countries
+  // useEffect = runs a piece of code based on a given condition
+  // The code inside will runs once when the component loads and not again
+  // async -> send a request, wait for it, do somethin with it
+
   return (
     <div className="app">
       <div className="app__left">
@@ -74,8 +78,8 @@ function App() {
           <FormControl className="app__dropdown">
             <Select
               variant="outlined"
-              onChange={onCountryChange}
               value={country}
+              onChange={onCountryChange}
             >
               <MenuItem value="worldwide">Worldwide</MenuItem>
               {countries.map((country) => (
