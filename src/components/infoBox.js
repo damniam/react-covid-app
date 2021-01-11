@@ -2,8 +2,9 @@ import React from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import "./InfoBox.css";
 
-function infoBox({ title, cases, total }) {
+function InfoBox({ title, cases, total }) {
   return (
     <>
       <Card className="infoBox">
@@ -23,4 +24,4 @@ function infoBox({ title, cases, total }) {
   );
 }
 
-export default infoBox;
+export default InfoBox;

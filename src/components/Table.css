@@ -6,7 +6,7 @@
 }
 
 .table tr:nth-last-child(odd) {
-  background-color: #eeecec;
+  background-color: rgba(173, 190, 202, 0.411);
 }
 
 .table td {
