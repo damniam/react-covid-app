@@ -22,3 +22,7 @@
   font-size: 1.75rem !important;
   margin-bottom: 0.5rem;
 }
+
+.infoBox--active {
+  border-top: 10px solid greenyellow;
+}

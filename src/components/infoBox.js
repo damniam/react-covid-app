@@ -4,11 +4,14 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import "./InfoBox.css";
 
-function InfoBox({ title, cases, total }) {
+function InfoBox({ active, title, cases, total, ...props }) {
   return (
     <>
-      <Card className="infoBox">
-        <CardContent className="infoBox__content">
+      <Card
+        onClick={props.onClick}
+        className={`infoBox ${active && "infoBox--active"}`}
+      >
+        <CardContent className="infoBox__content ">
           <Typography className="infoBox__title" color="textSecondary">
             {title}
           </Typography>
