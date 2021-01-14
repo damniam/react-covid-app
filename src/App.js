@@ -132,11 +132,11 @@ function App() {
       </div>
 
       <div className="app__right">
-        <Card className="sidebar">
+        <Card className="app__information">
           <CardContent>
             <h3>Live Cases by Country</h3>
             <Table countries={tableData} />
-            <h3>Worldwide new {casesType}</h3>
+            <h3 className="header--information">Worldwide new {casesType}</h3>
             <Graph className="app__graph" casesType={casesType} />
           </CardContent>
         </Card>
